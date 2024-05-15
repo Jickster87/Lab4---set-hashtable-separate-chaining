@@ -11,7 +11,18 @@ class Set {
 	friend class SetIterator;
 
     private:
-		//TODO - Representation //
+        struct Node {
+            TElem key;
+            Node* next;
+            Node* prev;
+            Node(TElem k) : key(k), next(nullptr), prev(nullptr) {}
+        };
+
+
+        Node** table;
+        int count;
+        int initial_capacity;
+        int hash(int key) const;
 
     public:
         //implicit constructor
@@ -41,8 +52,3 @@ class Set {
         ~Set();
 
 };
-
-
-
-
-

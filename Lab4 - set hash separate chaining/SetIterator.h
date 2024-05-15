@@ -11,12 +11,13 @@ private:
 	SetIterator(const Set& s);
 
 	//TODO - Representation
-
+	int currentIndex;
+	Set::Node* current;
+	void findNextValid();
+	
 public:
 	void first();
 	void next();
 	TElem getCurrent();
 	bool valid() const;
 };
-
-
