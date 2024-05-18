@@ -6,22 +6,21 @@
 typedef int TElem;
 class SetIterator;
 
+struct Node {
+    TElem key;
+    Node* next;
+    Node* prev;
+    Node(TElem k) : key(k), next(nullptr), prev(nullptr) {}
+};
+
 class Set {
 	//DO NOT CHANGE THIS PART
 	friend class SetIterator;
 
     private:
-        struct Node {
-            TElem key;
-            Node* next;
-            Node* prev;
-            Node(TElem k) : key(k), next(nullptr), prev(nullptr) {}
-        };
-
-
-        Node** table;
+        Node** hashTable;
         int count;
-        int initial_capacity;
+        int capacity;
         int hash(int key) const;
 
     public:

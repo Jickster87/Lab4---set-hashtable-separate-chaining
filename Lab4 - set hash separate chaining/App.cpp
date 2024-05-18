@@ -12,7 +12,7 @@ using namespace std;
 int main() {
 
 	testAll();
-	//testAllExtended();
+	testAllExtended();
 
 	cout << "That's all!" << endl;
 	system("pause");

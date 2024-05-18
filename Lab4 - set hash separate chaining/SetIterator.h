@@ -12,8 +12,7 @@ private:
 
 	//TODO - Representation
 	int currentIndex;
-	Set::Node* current;
-	void findNextValid();
+	Node* current;
 	
 public:
 	void first();

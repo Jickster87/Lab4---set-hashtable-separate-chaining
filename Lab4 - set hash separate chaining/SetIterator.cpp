@@ -1,50 +1,50 @@
 #include "SetIterator.h"
 #include "Set.h"
+#include <stdexcept> // For std::exception
 
 SetIterator::SetIterator(const Set& m) : set(m)
 {
-    // Initialize the iterator
-    currentIndex = -1;
-    current = nullptr;
-    findNextValid(); // Move to the first valid element
+    first();
 }
 
 void SetIterator::first() {
     // Move to the first valid element
-    currentIndex = -1;
-    findNextValid();
+    currentIndex = 0;
+    current = nullptr;
+    while (currentIndex < set.capacity && set.hashTable[currentIndex] == nullptr) {
+        currentIndex++;
+    }
+    if (currentIndex < set.capacity) {
+        current = set.hashTable[currentIndex];
+    }
+
 }
 
 void SetIterator::next() {
     // Move to the next valid element
-    if (valid()) {
-        current = current->next;
-        findNextValid();
+    if (!valid()) {
+        throw std::exception(); // Invalid state
+    }
+    current = current->next;
+    if (current == nullptr) {
+        currentIndex++;
+        while (currentIndex < set.capacity && set.hashTable[currentIndex] == nullptr) {
+            currentIndex++;
+        }
+        if (currentIndex < set.capacity) {
+            current = set.hashTable[currentIndex];
+        }
     }
 }
 
 TElem SetIterator::getCurrent() {
-    // Return the current element
-    if (valid()) {
-        return current->key;
+    if (!valid()) {
+        throw std::exception();
     }
-    return NULL_TELEM;
+    return current->key;
 }
 
 bool SetIterator::valid() const {
     // Check if the iterator is valid
     return current != nullptr;
-}
-
-void SetIterator::findNextValid() {
-    // Move to the next valid element in the set
-    currentIndex++;
-    while (currentIndex < set.initial_capacity) {
-        if (set.table[currentIndex] != nullptr) {
-            current = set.table[currentIndex];
-            return;
-        }
-        currentIndex++;
-    }
-    current = nullptr; // Reached the end of the set
 }
